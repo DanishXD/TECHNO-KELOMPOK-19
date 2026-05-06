@@ -3,7 +3,9 @@ node_modules/
 *.log
 .DS_Store
 database/study_ringkas.sql
-
+backend/config/db.js
+backend/package-lock.json
+backend/package.json
 # Node/npm related
 npm-debug.log*
 yarn-debug.log*
