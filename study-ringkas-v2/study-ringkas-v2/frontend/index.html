@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>StudyRingkas — Platform Belajar Mahasiswa IPB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar">
+    <div class="nav-logo">
+      <span class="logo-icon">📚</span>
+      <span class="logo-name">Study<span class="g">Ringkas</span></span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#" class="nav-link active" data-page="beranda">Beranda</a></li>
+      <li><a href="#" class="nav-link" data-page="materi">Materi</a></li>
+      <li><a href="#" class="nav-link" data-page="soal">Bank Soal</a></li>
+      <li><a href="#" class="nav-link" data-page="setelan">Setelan</a></li>
+    </ul>
+    <div class="nav-user">
+      <span class="nav-search">🔍</span>
+      <div class="user-divider"></div>
+      <div class="user-avatar" id="nav-avatar">DH</div>
+      <div class="user-info">
+        <span class="user-name" id="nav-name">Danish H.</span>
+        <span class="user-nim"  id="nav-nim">M0405241055</span>
+      </div>
+      <button class="btn-logout" onclick="logout()" title="Keluar">⏻</button>
+    </div>
+  </nav>
+
+  <!-- ===== LAYOUT ===== -->
+  <div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <nav class="sidebar-nav">
+        <a href="#" class="sb-item active" data-page="beranda">
+          <span class="sb-icon">🏠</span><span class="sb-label">Beranda</span>
+        </a>
+        <a href="#" class="sb-item" data-page="materi">
+          <span class="sb-icon">📚</span><span class="sb-label">Materi</span>
+        </a>
+        <a href="#" class="sb-item" data-page="soal">
+          <span class="sb-icon">📝</span><span class="sb-label">Bank Soal</span>
+        </a>
+        <a href="#" class="sb-item" data-page="favorit">
+          <span class="sb-icon">⭐</span><span class="sb-label">Favorit</span>
+        </a>
+        <a href="#" class="sb-item" data-page="setelan">
+          <span class="sb-icon">⚙️</span><span class="sb-label">Setelan</span>
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="sf-name">Kelompok 19</div>
+        <div class="sf-inst">IPB University 2026</div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+
+      <!-- ===== PAGE: BERANDA ===== -->
+      <section class="page active" id="page-beranda">
+
+        <!-- Hero -->
+        <div class="hero">
+          <div class="hero-left">
+            <div class="hero-badge">✨ Platform Belajar Digital · IPB University 2026</div>
+            <h1 class="hero-title" id="hero-greeting">Selamat datang, Danish! 👋</h1>
+            <p class="hero-sub">Hari ini: 3 materi menunggu · Jadwal belajar 18:00</p>
+            <div class="hero-actions">
+              <button class="btn-green" onclick="navigate('materi')">🚀 Mulai Belajar</button>
+              <button class="btn-outline" onclick="navigate('soal')">📝 Kerjakan Soal</button>
+            </div>
+          </div>
+          <div class="hero-right">
+            <div class="hero-prog-label">Progress Hari Ini</div>
+            <div class="hero-prog-val">60%</div>
+            <div class="prog-track"><div class="prog-fill" style="width:60%"></div></div>
+            <div class="hero-prog-sub">3 dari 5 materi selesai</div>
+          </div>
+        </div>
+
+        <!-- Stat Cards -->
+        <div class="stat-row">
+          <div class="stat-card" style="--acc:#22c55e">
+            <div class="stat-val" style="color:#22c55e">60%</div>
+            <div class="stat-lbl">Target Hari Ini</div>
+            <div class="stat-sub">3 dari 5 materi</div>
+          </div>
+          <div class="stat-card" style="--acc:#3b82f6">
+            <div class="stat-val" style="color:#3b82f6">72%</div>
+            <div class="stat-lbl">Progres Belajar</div>
+            <div class="stat-sub">Bulan ini</div>
+          </div>
+          <div class="stat-card" style="--acc:#a855f7">
+            <div class="stat-val" style="color:#a855f7">182</div>
+            <div class="stat-lbl">Soal Dikerjakan</div>
+            <div class="stat-sub">Total keseluruhan</div>
+          </div>
+          <div class="stat-card" style="--acc:#f59e0b">
+            <div class="stat-val" style="color:#f59e0b">78%</div>
+            <div class="stat-lbl">Rata-rata Nilai</div>
+            <div class="stat-sub">Dari semua sesi</div>
+          </div>
+        </div>
+
+        <!-- Sensor Real-time -->
+        <div class="section-header">
+          <h2 class="section-title">Status Sensor Real-time</h2>
+          <span class="section-dot"></span>
+        </div>
+        <div class="sensor-row">
+          <div class="sensor-card">
+            <span class="sensor-icon">🌡️</span>
+            <div class="sensor-info">
+              <div class="sensor-val">28°C</div>
+              <div class="sensor-lbl">Suhu Udara</div>
+            </div>
+            <span class="sensor-badge green">Normal</span>
+          </div>
+          <div class="sensor-card">
+            <span class="sensor-icon">📚</span>
+            <div class="sensor-info">
+              <div class="sensor-val">72%</div>
+              <div class="sensor-lbl">Progres Belajar</div>
+            </div>
+            <span class="sensor-badge green">Aman</span>
+          </div>
+          <div class="sensor-card">
+            <span class="sensor-icon">💡</span>
+            <div class="sensor-info">
+              <div class="sensor-val">540lx</div>
+              <div class="sensor-lbl">Cahaya</div>
+            </div>
+            <span class="sensor-badge blue">Terang</span>
+          </div>
+        </div>
+
+        <!-- Alert -->
+        <div class="alert-box yellow">
+          ⚠️ Tugas Kalkulus jatuh tempo 2 hari lagi — Segera selesaikan sebelum deadline!
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="section-header"><h2 class="section-title">Aksi Cepat</h2></div>
+        <div class="action-row">
+          <button class="action-btn primary" onclick="navigate('materi')">📖 Mulai Belajar</button>
+          <button class="action-btn" onclick="navigate('soal')">📝 Kerjakan Soal</button>
+          <button class="action-btn" onclick="navigate('favorit')">⭐ Materi Favorit</button>
+          <button class="action-btn">📊 Lihat Progres</button>
+        </div>
+
+        <!-- Bottom 2-col -->
+        <div class="bottom-grid">
+          <div>
+            <div class="section-header"><h2 class="section-title">Jadwal Berikutnya</h2></div>
+            <div class="jadwal-card">
+              <div class="jadwal-time">18:00</div>
+              <div class="jadwal-info">
+                <div class="jadwal-title">Sesi Latihan Soal Kalkulus</div>
+                <div class="jadwal-sub">Durasi 60 menit · Senin, Rabu, Jumat</div>
+              </div>
+              <span class="badge-aktif">● Aktif</span>
+            </div>
+          </div>
+          <div>
+            <div class="section-header"><h2 class="section-title">Terakhir Dibuka</h2></div>
+            <div class="recent-list" id="recent-list">
+              <div class="recent-item">
+                <span class="ri-icon">🧮</span>
+                <div class="ri-info">
+                  <div class="ri-title">Turunan Fungsi Komposit</div>
+                  <div class="ri-sub">Kalkulus · 5 mnt</div>
+                </div>
+                <div class="ri-right">
+                  <div class="ri-prog-track"><div class="ri-prog-fill blue" style="width:75%"></div></div>
+                  <span class="ri-pct" style="color:#3b82f6">75%</span>
+                </div>
+              </div>
+              <div class="recent-item">
+                <span class="ri-icon">🗄️</span>
+                <div class="ri-info">
+                  <div class="ri-title">Normalisasi Database</div>
+                  <div class="ri-sub">Database · 8 mnt</div>
+                </div>
+                <div class="ri-right">
+                  <div class="ri-prog-track"><div class="ri-prog-fill purple" style="width:40%"></div></div>
+                  <span class="ri-pct" style="color:#a855f7">40%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== PAGE: MATERI ===== -->
+      <section class="page" id="page-materi">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Materi Kuliah</h1>
+            <p class="page-sub">Ringkasan materi per mata kuliah — belajar lebih ringkas & efektif</p>
+          </div>
+        </div>
+
+        <!-- Search + Filter -->
+        <div class="search-row">
+          <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-input" placeholder="Cari judul materi..." id="search-materi" oninput="filterMateri()"/>
+          </div>
+          <div class="filter-box">⚙️ Filter ▾</div>
+        </div>
+
+        <!-- Pills -->
+        <div class="pills" id="pills-materi">
+          <button class="pill active" onclick="filterPill(this,'materi','Semua')">Semua</button>
+          <button class="pill" onclick="filterPill(this,'materi','Kalkulus')">Kalkulus</button>
+          <button class="pill" onclick="filterPill(this,'materi','Pemrograman')">Pemrograman</button>
+          <button class="pill" onclick="filterPill(this,'materi','Database')">Database</button>
+          <button class="pill" onclick="filterPill(this,'materi','Statistika')">Statistika</button>
+          <button class="pill" onclick="filterPill(this,'materi','Jaringan')">Jaringan</button>
+        </div>
+
+        <h3 class="sub-heading">Semua Materi</h3>
+        <div class="materi-grid" id="materi-grid"></div>
+
+        <!-- Jadwal Otomatis -->
+        <h3 class="sub-heading" style="margin-top:2rem">Jadwal Belajar Otomatis</h3>
+        <div class="jadwal-row">
+          <div class="jadwal-auto-card">
+            <div class="jac-time">07:00</div>
+            <div class="jac-desc">Kalkulus — Setiap hari</div>
+            <span class="jac-tog on">Aktif</span>
+          </div>
+          <div class="jadwal-auto-card">
+            <div class="jac-time">12:00</div>
+            <div class="jac-desc">Pemrograman — Setiap hari</div>
+            <span class="jac-tog on">Aktif</span>
+          </div>
+          <div class="jadwal-auto-card">
+            <div class="jac-time">18:00</div>
+            <div class="jac-desc">Database — Sen, Rab, Jum</div>
+            <span class="jac-tog off">Off</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== PAGE: BANK SOAL ===== -->
+      <section class="page" id="page-soal">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Bank Soal & Kuis</h1>
+            <p class="page-sub">Latihan soal interaktif per mata kuliah dengan pembahasan lengkap</p>
+          </div>
+        </div>
+
+        <!-- Alert aktif -->
+        <div class="alert-box red">
+          ● 3 Soal Aktif Tersisa &nbsp;·&nbsp; Sesi latihan Kalkulus sedang berjalan · Nilai terakhir: 80/100
+        </div>
+
+        <div class="soal-layout">
+          <div class="soal-main">
+            <!-- Progress -->
+            <div class="soal-progress-bar">
+              <span class="sp-label">Soal <strong id="soal-current">1</strong> dari <strong>5</strong></span>
+              <span class="sp-kat">Kalkulus — Turunan</span>
+              <div class="sp-track"><div class="sp-fill" id="soal-fill" style="width:20%"></div></div>
+              <span class="sp-pct" id="soal-pct">20%</span>
+              <div class="sp-timer">⏱ <span id="timer">04:32</span></div>
+            </div>
+
+            <!-- Question -->
+            <div class="question-card" id="question-card"></div>
+
+            <!-- Options -->
+            <p class="opt-label">Pilih Jawaban</p>
+            <div class="options-list" id="options-list"></div>
+
+            <!-- Actions -->
+            <div class="soal-actions">
+              <button class="btn-green" onclick="cekJawaban()">✓ Cek Jawaban</button>
+              <button class="btn-outline" onclick="togglePembahasan()">Lihat Pembahasan</button>
+              <button class="btn-outline" onclick="nextSoal()">Lewati →</button>
+            </div>
+
+            <!-- Pembahasan -->
+            <div class="pembahasan-box" id="pembahasan-box" style="display:none"></div>
+          </div>
+
+          <div class="soal-sidebar">
+            <!-- Info sesi -->
+            <div class="info-card">
+              <div class="ic-title">Info Sesi</div>
+              <div class="ic-divider"></div>
+              <div class="ic-row"><span>Mata Kuliah</span><strong>Kalkulus</strong></div>
+              <div class="ic-row"><span>Kategori</span><strong>Turunan</strong></div>
+              <div class="ic-row"><span>Soal Selesai</span><strong id="done-count">1 / 5</strong></div>
+              <div class="ic-row"><span>Skor</span><strong id="score-display">0</strong></div>
+              <div class="ic-row"><span>Status</span><strong class="g">Berlangsung</strong></div>
+            </div>
+            <!-- Riwayat -->
+            <div class="info-card" style="margin-top:1rem">
+              <div class="ic-title">Riwayat Latihan</div>
+              <div class="ic-divider"></div>
+              <div class="riwayat-list">
+                <div class="rw-item"><span>Kalkulus Score 80%</span><span class="rw-badge">Selesai</span></div>
+                <div class="rw-item"><span>Pemrograman OOP</span><span class="rw-badge">Selesai</span></div>
+                <div class="rw-item"><span>Statistika Bab 3</span><span class="rw-badge">Selesai</span></div>
+                <div class="rw-item"><span>Database SQL</span><span class="rw-badge">Selesai</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== PAGE: SETELAN ===== -->
+      <section class="page" id="page-setelan">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Setelan</h1>
+            <p class="page-sub">Kelola akun, preferensi tampilan, dan informasi project</p>
+          </div>
+        </div>
+
+        <div class="setelan-grid">
+          <!-- Left column -->
+          <div class="setelan-col">
+            <!-- Profile -->
+            <div class="profile-card">
+              <div class="profile-avatar">DH</div>
+              <div class="profile-info">
+                <div class="profile-name">Danish Hafid Wibisono</div>
+                <div class="profile-nim">M0405241055</div>
+                <div class="profile-inst">IPB University · Kelompok 19 · 2026</div>
+              </div>
+              <span class="profile-verified">✓ Terverifikasi</span>
+            </div>
+
+            <!-- Akun -->
+            <div class="set-section-label">Akun</div>
+            <div class="set-row"><span class="set-icon">👤</span><div><div class="set-title">Profil Pengguna</div><div class="set-sub">Nama, NIM, email, foto profil</div></div><span class="set-arrow">›</span></div>
+            <div class="set-row"><span class="set-icon">🔔</span><div><div class="set-title">Preferensi Notifikasi</div><div class="set-sub">Atur jenis & frekuensi notifikasi</div></div><span class="set-arrow">›</span></div>
+            <div class="set-row"><span class="set-icon">🔒</span><div><div class="set-title">Keamanan</div><div class="set-sub">Password & autentikasi dua faktor</div></div><span class="set-arrow">›</span></div>
+
+            <!-- Tampilan -->
+            <div class="set-section-label">Preferensi Tampilan</div>
+            <div class="set-row highlighted" id="mode-gelap-row">
+              <span class="set-icon">🌙</span>
+              <div><div class="set-title">Mode Gelap</div><div class="set-sub">Tema aplikasi aktif saat ini</div></div>
+              <div class="toggle on" id="dark-toggle" onclick="toggleDark()"><div class="toggle-knob"></div></div>
+            </div>
+            <div class="set-row"><span class="set-icon">🌐</span><div><div class="set-title">Bahasa</div><div class="set-sub">Indonesia</div></div><span class="set-arrow">›</span></div>
+
+            <!-- Bantuan -->
+            <div class="set-section-label">Bantuan</div>
+            <div class="set-row"><span class="set-icon">📖</span><div><div class="set-title">Manual & FAQ</div><div class="set-sub">Panduan penggunaan platform</div></div><span class="set-arrow">›</span></div>
+            <div class="set-row"><span class="set-icon">📞</span><div><div class="set-title">Kontak Support</div><div class="set-sub">Hubungi tim Kelompok 19</div></div><span class="set-arrow">›</span></div>
+          </div>
+
+          <!-- Right column -->
+          <div class="setelan-col">
+            <div class="set-section-label">Anggota Kelompok 19</div>
+            <div class="member-card" style="--mc:#3b82f6"><div class="mc-avatar" style="background:#3b82f6">NL</div><div><div class="mc-name">Naila Fadilla Stevhany Lestari</div><div class="mc-nim">M0405241025</div></div></div>
+            <div class="member-card" style="--mc:#22c55e"><div class="mc-avatar" style="background:#22c55e">DH</div><div><div class="mc-name">Danish Hafid Wibisono</div><div class="mc-nim">M0405241055</div></div></div>
+            <div class="member-card" style="--mc:#f59e0b"><div class="mc-avatar" style="background:#f59e0b">CB</div><div><div class="mc-name">Cornelius Bernadr Harefa</div><div class="mc-nim">M0405241084</div></div></div>
+
+            <div class="set-section-label" style="margin-top:1.5rem">Info Project</div>
+            <div class="project-info-card">
+              <div class="pi-row"><span>Nama Project</span><strong>Study Ringkas</strong></div>
+              <div class="pi-row"><span>Institusi</span><strong>Institut Pertanian Bogor</strong></div>
+              <div class="pi-row"><span>Tahun</span><strong>2026</strong></div>
+              <div class="pi-row"><span>Tech Stack</span><strong>Node.js · MySQL · HTML/CSS/JS</strong></div>
+              <div class="pi-row"><span>GitHub</span><strong><a href="https://github.com/kelompok19-ipb/study-ringkas" target="_blank" class="g">github.com/kelompok19-ipb/study-ringkas</a></strong></div>
+            </div>
+
+            <!-- DB Connection Status -->
+            <div class="set-section-label" style="margin-top:1.5rem">Status Sistem</div>
+            <div class="db-status-card" id="db-status-card">
+              <div class="dbs-row"><span class="dbs-dot green-dot"></span><span>Frontend</span><strong class="g">Running</strong></div>
+              <div class="dbs-row"><span class="dbs-dot green-dot"></span><span>Backend API</span><strong id="api-status">Checking...</strong></div>
+              <div class="dbs-row"><span class="dbs-dot" id="db-dot"></span><span>Database MySQL</span><strong id="db-status">Checking...</strong></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

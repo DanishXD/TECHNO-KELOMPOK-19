@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>StudyRingkas — Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:      #111418;
+      --bg2:     #161b22;
+      --card:    #1c2230;
+      --green:   #22c55e;
+      --greenDk: #0f4d27;
+      --greenLt: #2edb6e;
+      --greenBg: #0d1f14;
+      --white:   #e8edf5;
+      --sec:     #8892a4;
+      --dim:     #4a5568;
+      --border:  #252d3a;
+      --red:     #d94040;
+      --redBg:   #1f0a0a;
+      --font:    'Sora', sans-serif;
+      --mono:    'JetBrains Mono', monospace;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Background grid */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(rgba(34,197,94,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34,197,94,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    /* Green glow blob */
+    body::after {
+      content: '';
+      position: fixed;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(34,197,94,0.08) 0%, transparent 70%);
+      top: -100px; left: -100px; z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ---- SPLIT LAYOUT ---- */
+    .login-wrapper {
+      position: relative; z-index: 1;
+      display: flex;
+      width: 900px;
+      min-height: 560px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+      animation: fadeUp 0.5s ease both;
+    }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+
+    /* ---- LEFT PANEL ---- */
+    .left-panel {
+      width: 380px;
+      flex-shrink: 0;
+      background: linear-gradient(160deg, var(--greenDk) 0%, #0a1a0f 100%);
+      border-right: 1px solid rgba(34,197,94,0.2);
+      padding: 48px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+    .left-panel::before {
+      content: '';
+      position: absolute;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(34,197,94,0.12) 0%, transparent 70%);
+      bottom: -80px; right: -80px;
+    }
+    .lp-logo { display: flex; align-items: center; gap: 10px; }
+    .lp-logo-icon { font-size: 1.8rem; }
+    .lp-logo-text { font-size: 1.4rem; font-weight: 800; color: var(--white); }
+    .lp-logo-text span { color: var(--green); }
+    .lp-body { position: relative; }
+    .lp-title { font-size: 1.6rem; font-weight: 800; color: var(--white); line-height: 1.25; margin-bottom: 14px; }
+    .lp-desc { font-size: 0.85rem; color: rgba(255,255,255,0.55); line-height: 1.7; margin-bottom: 28px; }
+    .lp-features { display: flex; flex-direction: column; gap: 10px; }
+    .lp-feat {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.82rem; color: rgba(255,255,255,0.7);
+    }
+    .lp-feat-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+    .lp-footer { font-size: 0.72rem; color: rgba(255,255,255,0.3); position: relative; }
+
+    /* ---- RIGHT PANEL ---- */
+    .right-panel {
+      flex: 1;
+      padding: 48px 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* TABS */
+    .auth-tabs { display: flex; gap: 0; margin-bottom: 32px; border-bottom: 1px solid var(--border); }
+    .auth-tab {
+      padding: 10px 0; margin-right: 28px;
+      font-size: 0.92rem; font-weight: 600; color: var(--sec);
+      cursor: pointer; border-bottom: 2.5px solid transparent;
+      transition: all 0.2s; background: none; border-top: none; border-left: none; border-right: none;
+      font-family: var(--font);
+    }
+    .auth-tab.active { color: var(--white); border-bottom-color: var(--green); }
+
+    /* FORMS */
+    .auth-form { display: none; flex-direction: column; gap: 16px; }
+    .auth-form.active { display: flex; }
+
+    .form-title { font-size: 1.3rem; font-weight: 800; color: var(--white); margin-bottom: 4px; }
+    .form-sub   { font-size: 0.82rem; color: var(--sec); margin-bottom: 8px; }
+
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field label { font-size: 0.78rem; font-weight: 600; color: var(--sec); letter-spacing: 0.04em; text-transform: uppercase; }
+    .field input {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 11px 14px;
+      font-family: var(--font); font-size: 0.88rem; color: var(--white);
+      outline: none; transition: border-color 0.2s;
+    }
+    .field input:focus { border-color: var(--green); }
+    .field input::placeholder { color: var(--dim); }
+
+    /* field row (2 col) */
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    /* Error / success */
+    .form-msg {
+      font-size: 0.8rem; font-weight: 600; padding: 10px 14px;
+      border-radius: 8px; display: none;
+    }
+    .form-msg.error   { background: var(--redBg); color: var(--red); border: 1px solid rgba(217,64,64,0.3); }
+    .form-msg.success { background: var(--greenBg); color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
+    .form-msg.show    { display: block; }
+
+    /* Submit button */
+    .btn-submit {
+      background: var(--green); color: #fff; border: none;
+      border-radius: 8px; padding: 13px;
+      font-family: var(--font); font-size: 0.92rem; font-weight: 700;
+      cursor: pointer; transition: all 0.2s; margin-top: 4px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-submit:hover { background: var(--greenLt); transform: translateY(-1px); }
+    .btn-submit:disabled { background: var(--dim); cursor: not-allowed; transform: none; }
+    .btn-submit .spinner {
+      width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff; border-radius: 50%;
+      animation: spin 0.6s linear infinite; display: none;
+    }
+    .btn-submit.loading .spinner { display: block; }
+    .btn-submit.loading .btn-text { display: none; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Demo account info */
+    .demo-box {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 10px 14px; margin-top: 4px;
+    }
+    .demo-label { font-size: 0.7rem; font-weight: 700; color: var(--sec); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+    .demo-creds { display: flex; flex-direction: column; gap: 3px; }
+    .demo-cred {
+      font-size: 0.75rem; color: var(--dim); font-family: var(--mono);
+      cursor: pointer; transition: color 0.15s;
+    }
+    .demo-cred:hover { color: var(--green); }
+    .demo-cred strong { color: var(--sec); }
+
+    /* Divider */
+    .divider { display: flex; align-items: center; gap: 10px; margin: 4px 0; }
+    .divider::before, .divider::after { content:''; flex:1; height:1px; background:var(--border); }
+    .divider span { font-size: 0.72rem; color: var(--dim); }
+  </style>
+</head>
+<body>
+  <div class="login-wrapper">
+
+    <!-- LEFT -->
+    <div class="left-panel">
+      <div class="lp-logo">
+        <span class="lp-logo-icon">📚</span>
+        <span class="lp-logo-text">Study<span>Ringkas</span></span>
+      </div>
+      <div class="lp-body">
+        <h2 class="lp-title">Belajar Lebih<br>Ringkas & Efektif</h2>
+        <p class="lp-desc">Platform belajar digital untuk mahasiswa IPB. Akses ringkasan materi, bank soal, dan pembahasan kapan saja.</p>
+        <div class="lp-features">
+          <div class="lp-feat"><div class="lp-feat-dot"></div>Ringkasan materi kuliah terstruktur</div>
+          <div class="lp-feat"><div class="lp-feat-dot"></div>Bank soal interaktif + timer</div>
+          <div class="lp-feat"><div class="lp-feat-dot"></div>Pembahasan lengkap tiap soal</div>
+          <div class="lp-feat"><div class="lp-feat-dot"></div>Monitoring progres belajar</div>
+        </div>
+      </div>
+      <div class="lp-footer">Kelompok 19 · Institut Pertanian Bogor · 2026</div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="right-panel">
+
+      <!-- TABS -->
+      <div class="auth-tabs">
+        <button class="auth-tab active" onclick="switchTab('login')">Masuk</button>
+        <button class="auth-tab" onclick="switchTab('register')">Daftar</button>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <form class="auth-form active" id="form-login" onsubmit="handleLogin(event)">
+        <div>
+          <div class="form-title">Selamat datang kembali 👋</div>
+          <div class="form-sub">Masuk ke akun StudyRingkas kamu</div>
+        </div>
+        <div class="form-msg" id="login-msg"></div>
+        <div class="field">
+          <label>Email</label>
+          <input type="email" id="login-email" placeholder="email@ipb.ac.id" required/>
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input type="password" id="login-pass" placeholder="••••••••" required/>
+        </div>
+        <button type="submit" class="btn-submit" id="login-btn">
+          <div class="spinner"></div>
+          <span class="btn-text">Masuk →</span>
+        </button>
+        <div class="divider"><span>atau coba akun demo</span></div>
+        <div class="demo-box">
+          <div class="demo-label">Akun Demo</div>
+          <div class="demo-creds">
+            <div class="demo-cred" onclick="fillDemo('danish@ipb.ac.id','danish123')">
+              <strong>Danish</strong> · danish@ipb.ac.id / danish123
+            </div>
+            <div class="demo-cred" onclick="fillDemo('naila@ipb.ac.id','naila123')">
+              <strong>Naila</strong> · naila@ipb.ac.id / naila123
+            </div>
+            <div class="demo-cred" onclick="fillDemo('cornelius@ipb.ac.id','cornelius123')">
+              <strong>Cornelius</strong> · cornelius@ipb.ac.id / cornelius123
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <!-- REGISTER FORM -->
+      <form class="auth-form" id="form-register" onsubmit="handleRegister(event)">
+        <div>
+          <div class="form-title">Buat akun baru ✨</div>
+          <div class="form-sub">Daftar dan mulai belajar sekarang</div>
+        </div>
+        <div class="form-msg" id="register-msg"></div>
+        <div class="field">
+          <label>Nama Lengkap</label>
+          <input type="text" id="reg-nama" placeholder="Nama lengkap kamu" required/>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>NIM</label>
+            <input type="text" id="reg-nim" placeholder="M040524xxxx"/>
+          </div>
+          <div class="field">
+            <label>Email</label>
+            <input type="email" id="reg-email" placeholder="email@ipb.ac.id" required/>
+          </div>
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input type="password" id="reg-pass" placeholder="Minimal 6 karakter" required minlength="6"/>
+        </div>
+        <div class="field">
+          <label>Konfirmasi Password</label>
+          <input type="password" id="reg-pass2" placeholder="Ulangi password" required/>
+        </div>
+        <button type="submit" class="btn-submit" id="register-btn">
+          <div class="spinner"></div>
+          <span class="btn-text">Daftar Sekarang →</span>
+        </button>
+      </form>
+
+    </div>
+  </div>
+
+  <script>
+    const API = 'http://localhost:3000/api';
+
+    // ---- TAB SWITCH ----
+    function switchTab(tab) {
+      document.querySelectorAll('.auth-tab').forEach((t,i) => {
+        t.classList.toggle('active', (i===0&&tab==='login')||(i===1&&tab==='register'));
+      });
+      document.getElementById('form-login').classList.toggle('active', tab==='login');
+      document.getElementById('form-register').classList.toggle('active', tab==='register');
+      clearMsgs();
+    }
+
+    function clearMsgs() {
+      document.querySelectorAll('.form-msg').forEach(m => { m.className='form-msg'; m.textContent=''; });
+    }
+
+    function showMsg(id, type, text) {
+      const el = document.getElementById(id);
+      el.className = 'form-msg ' + type + ' show';
+      el.textContent = text;
+    }
+
+    function setLoading(btnId, loading) {
+      const btn = document.getElementById(btnId);
+      btn.classList.toggle('loading', loading);
+      btn.disabled = loading;
+    }
+
+    // ---- FILL DEMO ----
+    function fillDemo(email, pass) {
+      document.getElementById('login-email').value = email;
+      document.getElementById('login-pass').value  = pass;
+    }
+
+    // ---- LOGIN ----
+    async function handleLogin(e) {
+      e.preventDefault();
+      clearMsgs();
+      const email = document.getElementById('login-email').value.trim();
+      const pass  = document.getElementById('login-pass').value;
+      setLoading('login-btn', true);
+      try {
+        const res  = await fetch(`${API}/users/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password: pass }),
+          signal: AbortSignal.timeout(5000),
+        });
+        const data = await res.json();
+        if (data.success) {
+          showMsg('login-msg', 'success', '✅ Login berhasil! Mengalihkan...');
+          // Save session to localStorage
+          localStorage.setItem('sr_user', JSON.stringify(data.user));
+          setTimeout(() => { window.location.href = 'index.html'; }, 800);
+        } else {
+          showMsg('login-msg', 'error', '❌ ' + data.message);
+        }
+      } catch (err) {
+        // Fallback: demo login offline jika backend belum jalan
+        const demoUsers = [
+          { id:1, nama:'Danish Hafid Wibisono',          nim:'M0405241055', email:'danish@ipb.ac.id'      },
+          { id:2, nama:'Naila Fadilla Stevhany Lestari', nim:'M0405241025', email:'naila@ipb.ac.id'        },
+          { id:3, nama:'Cornelius Bernadr Harefa',       nim:'M0405241084', email:'cornelius@ipb.ac.id'    },
+        ];
+        const demoPw = { 'danish@ipb.ac.id':'danish123', 'naila@ipb.ac.id':'naila123', 'cornelius@ipb.ac.id':'cornelius123' };
+        const user = demoUsers.find(u => u.email === email);
+        if (user && demoPw[email] === pass) {
+          showMsg('login-msg', 'success', '✅ Login berhasil (mode offline)! Mengalihkan...');
+          localStorage.setItem('sr_user', JSON.stringify(user));
+          setTimeout(() => { window.location.href = 'index.html'; }, 800);
+        } else {
+          showMsg('login-msg', 'error', '❌ Email atau password salah');
+        }
+      } finally {
+        setLoading('login-btn', false);
+      }
+    }
+
+    // ---- REGISTER ----
+    async function handleRegister(e) {
+      e.preventDefault();
+      clearMsgs();
+      const nama  = document.getElementById('reg-nama').value.trim();
+      const nim   = document.getElementById('reg-nim').value.trim();
+      const email = document.getElementById('reg-email').value.trim();
+      const pass  = document.getElementById('reg-pass').value;
+      const pass2 = document.getElementById('reg-pass2').value;
+
+      if (pass !== pass2) { showMsg('register-msg','error','❌ Password tidak cocok'); return; }
+      if (pass.length < 6) { showMsg('register-msg','error','❌ Password minimal 6 karakter'); return; }
+
+      setLoading('register-btn', true);
+      try {
+        const res  = await fetch(`${API}/users/register`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nama, nim, email, password: pass }),
+          signal: AbortSignal.timeout(5000),
+        });
+        const data = await res.json();
+        if (data.success) {
+          showMsg('register-msg','success','✅ Registrasi berhasil! Silakan masuk.');
+          setTimeout(() => switchTab('login'), 1500);
+        } else {
+          showMsg('register-msg','error','❌ ' + data.message);
+        }
+      } catch {
+        showMsg('register-msg','error','⚠️ Backend offline — registrasi memerlukan koneksi ke server');
+      } finally {
+        setLoading('register-btn', false);
+      }
+    }
+
+    // Jika sudah login, langsung redirect ke app
+    if (localStorage.getItem('sr_user')) {
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>
