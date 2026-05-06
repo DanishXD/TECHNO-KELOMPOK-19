@@ -189,7 +189,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--white); hei
 .section-dot { width: 40px; height: 2px; background: var(--green); border-radius: 1px; }
 
 /* ===================== SENSORS ===================== */
-.sensor-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 16px; }
+.sensor-row { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 16px; }
 .sensor-card {
   background: var(--card); border-radius: var(--radius-sm);
   padding: 14px 18px; display: flex; align-items: center; gap: 14px;

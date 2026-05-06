@@ -250,8 +250,8 @@
         <div class="demo-box">
           <div class="demo-label">Akun Demo</div>
           <div class="demo-creds">
-            <div class="demo-cred" onclick="fillDemo('danish@ipb.ac.id','danish123')">
-              <strong>Danish</strong> · danish@ipb.ac.id / danish123
+            <div class="demo-cred" onclick="fillDemo('danishafidwibisono@ipb.ac.id','danish123')">
+              <strong>Danish</strong> · danishafidwibisono@ipb.ac.id / danish123
             </div>
             <div class="demo-cred" onclick="fillDemo('naila@ipb.ac.id','naila123')">
               <strong>Naila</strong> · naila@ipb.ac.id / naila123
@@ -362,11 +362,11 @@
       } catch (err) {
         // Fallback: demo login offline jika backend belum jalan
         const demoUsers = [
-          { id:1, nama:'Danish Hafid Wibisono',          nim:'M0405241055', email:'danish@ipb.ac.id'      },
+          { id:1, nama:'Danish Hafid Wibisono',          nim:'M0405241055', email:'danishafidwibisono@ipb.ac.id'      },
           { id:2, nama:'Naila Fadilla Stevhany Lestari', nim:'M0405241025', email:'naila@ipb.ac.id'        },
           { id:3, nama:'Cornelius Bernadr Harefa',       nim:'M0405241084', email:'cornelius@ipb.ac.id'    },
         ];
-        const demoPw = { 'danish@ipb.ac.id':'danish123', 'naila@ipb.ac.id':'naila123', 'cornelius@ipb.ac.id':'cornelius123' };
+        const demoPw = { 'danishafidwibisono@ipb.ac.id':'danish123', 'naila@ipb.ac.id':'naila123', 'cornelius@ipb.ac.id':'cornelius123' };
         const user = demoUsers.find(u => u.email === email);
         if (user && demoPw[email] === pass) {
           showMsg('login-msg', 'success', '✅ Login berhasil (mode offline)! Mengalihkan...');
